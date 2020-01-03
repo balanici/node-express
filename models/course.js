@@ -15,12 +15,14 @@ class Course {
       title: this.title,
       price: this.price,
       img: this.img,
-      // id: this.id
+      id: this.id
     })
   }
 
   async save() {
     const courses = await Course.getAll();
+    let newId = courses.length + 1;
+    this.id = newId;
     courses.push(this.toJSON());
     console.log('Courses: ', courses);
 
@@ -49,6 +51,11 @@ class Course {
           }
       );
     });
+  }
+
+  static async getById(id) {
+    const courses = await Course.getAll();
+    return courses.find(c => c.id == id);
   }
 }
 
