@@ -21,12 +21,12 @@ class Course {
 
   static async update(course) {
     const courses = await Course.getAll();
-    const idx = courses.findIndex(c => c.id == course.id);
+    const idx = courses.findIndex(c => c.id === course.id);
     courses[idx] = course;
 
     return new Promise((resolve, reject) => {
       fs.writeFile(
-          path.join(__dirname, '..', 'data', 'courses.json'),
+          path.join(__dirname, '..', 'data', 'courses.jsonnnn'),
           JSON.stringify(courses),
           (err) => {
             if (err) { reject(err) }
@@ -39,14 +39,13 @@ class Course {
 
   async save() {
     const courses = await Course.getAll();
-    let newId = courses.length + 1;
-    this.id = newId;
+    this.id = courses.length + 1;
     courses.push(this.toJSON());
     console.log('Courses: ', courses);
 
     return new Promise((resolve, reject) => {
       fs.writeFile(
-          path.join(__dirname, '..', 'data', 'courses.json'),
+          path.join(__dirname, '..', 'data', 'courses.jsonnnn'),
           JSON.stringify(courses),
           (err) => {
             if (err) { reject(err) }
@@ -58,10 +57,10 @@ class Course {
 
   }
 
-  static getAll() {
+  static async getAll() {
     return new Promise((resolve, reject) => {
       fs.readFile(
-          path.join(__dirname, '..', 'data', 'courses.json'),
+          path.join(__dirname, '..', 'data', 'courses.jsonnnn'),
           'utf-8',
           (err, content) => {
             if (err) { reject(err) }
@@ -73,7 +72,7 @@ class Course {
 
   static async getById(id) {
     const courses = await Course.getAll();
-    return courses.find(c => c.id == id);
+    return courses.find(c => c.id === +id);
   }
 }
 
